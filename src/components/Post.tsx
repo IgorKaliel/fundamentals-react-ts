@@ -1,11 +1,11 @@
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR'
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
 import { Comment } from './Comment';
 import { Avatar } from './Avatar';
 
 import styles from './Post.module.css';
-import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
 interface Author {
   name: string;
@@ -21,11 +21,13 @@ interface Content {
 interface PostProps {
   author: Author;
   publishedAt: Date;
-  content: Content;
+  content: Content[];
 }
 
 export function Post({ author, publishedAt, content }: PostProps) {
-  const [comments, setComments] = useState([{}]);
+  const [comments, setComments] = useState([
+    'Post muito bacana!'
+  ]);
 
   const [newCommentText, setNewCommentText ] = useState('');
 
@@ -118,8 +120,10 @@ export function Post({ author, publishedAt, content }: PostProps) {
           {comments.map(comment => {
             return (
               <Comment
+                key={comment}
                 content={comment} 
-                onDeleteComment={deleteComment} />
+                onDeleteComment={deleteComment}
+              />
             );
           })}
         </div>  
